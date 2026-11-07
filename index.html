@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FinDash</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%232563eb'/%3E%3Cg transform='translate(10.5 10.9) scale(0.66)' fill='%23ffffff'%3E%3Crect x='10' y='8' width='13' height='48' rx='6.5'/%3E%3Crect x='27' y='8' width='28' height='13' rx='6.5'/%3E%3Crect x='27' y='25.5' width='18' height='13' rx='6.5' opacity='0.7'/%3E%3C/g%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@700&amp;display=swap">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main class="app">
+
+    <section class="view" id="homeView">
+      <header class="hero">
+        <div class="hero-icon"><svg class="mark" viewBox="0 0 64 64" aria-hidden="true"><rect class="stem" x="10" y="8" width="13" height="48" rx="6.5"></rect><rect class="bar" x="27" y="8" width="28" height="13" rx="6.5"></rect><rect class="bar soft" x="27" y="25.5" width="18" height="13" rx="6.5"></rect></svg></div>
+        <h1 class="wordmark">FIN<span>DASH</span></h1>
+        <p class="subtitle">Currencies, crypto, gold and stocks with live prices</p>
+      </header>
+
+      <div class="summary-grid" id="summaryGrid"></div>
+
+      <div class="home-cards">
+        <a class="home-card" href="#currency">
+          <span class="home-emoji blue">💵</span>
+          <span class="home-text">
+            <strong>Currency Converter</strong>
+            <small>160+ world currencies with live rates</small>
+          </span>
+          <span class="home-arrow">→</span>
+        </a>
+
+        <a class="home-card" href="#crypto">
+          <span class="home-emoji gold">🪙</span>
+          <span class="home-text">
+            <strong>Crypto &amp; Gold</strong>
+            <small>Bitcoin, Ethereum, gold and silver prices</small>
+          </span>
+          <span class="home-arrow">→</span>
+        </a>
+
+        <a class="home-card" href="#stocks">
+          <span class="home-emoji green">📈</span>
+          <span class="home-text">
+            <strong>Stock Market</strong>
+            <small>Live stocks, charts and market heatmap</small>
+          </span>
+          <span class="home-arrow">→</span>
+        </a>
+
+        <a class="home-card" href="#room">
+          <span class="home-emoji dark">🖥️</span>
+          <span class="home-text">
+            <strong>Trading Room</strong>
+            <small>4 live charts, world markets, calendar and trader tools</small>
+          </span>
+          <span class="home-arrow">→</span>
+        </a>
+
+        <a class="home-card" href="#portfolio">
+          <span class="home-emoji purple">💼</span>
+          <span class="home-text">
+            <strong>My Portfolio</strong>
+            <small>Track the live value of your money, crypto and gold</small>
+          </span>
+          <span class="home-arrow">→</span>
+        </a>
+      </div>
+    </section>
+
+    <nav class="topbar" id="topbar" hidden>
+      <a class="brand" href="#home" title="Back to home"><svg class="mark" viewBox="0 0 64 64" aria-hidden="true"><rect class="stem" x="10" y="8" width="13" height="48" rx="6.5"></rect><rect class="bar" x="27" y="8" width="28" height="13" rx="6.5"></rect><rect class="bar soft" x="27" y="25.5" width="18" height="13" rx="6.5"></rect></svg><span class="wordmark">FIN<span>DASH</span></span></a>
+      <div class="tabs">
+        <a class="tab" href="#currency" data-view="currency">💱 Currency</a>
+        <a class="tab" href="#crypto" data-view="crypto">🪙 Crypto &amp; Gold</a>
+        <a class="tab" href="#stocks" data-view="stocks">📈 Stocks</a>
+        <a class="tab" href="#room" data-view="room">🖥️ Trading Room</a>
+        <a class="tab" href="#portfolio" data-view="portfolio">💼 Portfolio</a>
+      </div>
+    </nav>
+
+    <section class="view" id="currencyView" hidden>
+      <header>
+        <h1>Currency Converter</h1>
+        <p class="subtitle" id="subtitle">Live exchange rates</p>
+      </header>
+
+      <section class="card">
+        <label class="label" for="amount">Amount</label>
+        <div class="field amount-field">
+          <span class="symbol" id="amountSymbol">$</span>
+          <input id="amount" type="number" inputmode="decimal" min="0" value="100">
+        </div>
+
+        <span class="label">From</span>
+        <div class="picker" id="fromPicker"></div>
+
+        <div class="swap-row">
+          <button class="swap" id="swap" title="Swap currencies">⇅</button>
+        </div>
+
+        <span class="label">To</span>
+        <div class="picker" id="toPicker"></div>
+      </section>
+
+      <section class="result-area">
+        <p class="equals" id="equals"></p>
+        <p class="result" id="result">Loading rates…</p>
+        <p class="result-name" id="resultName"></p>
+
+        <div class="rates" id="rates" hidden>
+          <span id="rateLine"></span>
+          <span id="inverseLine"></span>
+        </div>
+
+        <div class="result-buttons">
+          <button class="copy" id="copy" hidden>Copy result</button>
+          <button class="alert-me" id="currencyAlertButton" type="button" hidden>🔔 Alert me</button>
+        </div>
+      </section>
+    </section>
+
+    <section class="view" id="cryptoView" hidden>
+      <header>
+        <h1>Crypto &amp; Gold</h1>
+        <p class="subtitle" id="cryptoSubtitle">Live crypto prices and daily metal prices</p>
+      </header>
+
+      <section class="card">
+        <span class="label">Asset</span>
+        <div class="picker asset-picker" id="assetPicker"></div>
+
+        <label class="label" for="assetAmount">Amount</label>
+        <div class="field amount-field">
+          <input id="assetAmount" type="number" inputmode="decimal" min="0" value="1">
+          <span class="unit" id="assetUnit">g</span>
+        </div>
+
+        <div class="chips" id="unitChips" hidden>
+          <button class="chip" data-unit="g">Grams</button>
+          <button class="chip" data-unit="oz">Ounces</button>
+          <button class="chip" data-unit="kg">Kilograms</button>
+        </div>
+
+        <div class="chips" id="karatChips" hidden>
+          <button class="chip" data-karat="24">24K</button>
+          <button class="chip" data-karat="22">22K</button>
+          <button class="chip" data-karat="21">21K</button>
+          <button class="chip" data-karat="18">18K</button>
+        </div>
+
+        <span class="label">Price in</span>
+        <div class="picker" id="assetCurrencyPicker"></div>
+      </section>
+
+      <section class="result-area">
+        <p class="equals" id="assetEquals"></p>
+        <p class="result" id="assetResult">Loading prices…</p>
+        <p class="result-name" id="assetResultName"></p>
+
+        <div class="rates" id="assetRates" hidden>
+          <span id="assetPriceLine"></span>
+          <span id="assetSecondLine"></span>
+        </div>
+
+        <div class="result-buttons">
+          <button class="alert-me" id="assetAlertButton" type="button" hidden>🔔 Alert me</button>
+        </div>
+      </section>
+
+      <h2 class="section-title">Market</h2>
+      <div class="market-grid" id="marketGrid"></div>
+    </section>
+
+    <section class="view" id="stocksView" hidden>
+      <header>
+        <h1>Stock Market</h1>
+        <p class="subtitle"><span class="status" id="marketStatus"></span></p>
+      </header>
+
+      <div class="panel ticker-panel">
+        <div id="tickerTape"></div>
+      </div>
+
+      <div class="panel">
+        <div class="stock-toolbar">
+          <form class="stock-search" id="stockSearch">
+            <input id="stockInput" type="text" placeholder="Type a ticker, e.g. AMD or NFLX" autocomplete="off">
+            <button class="search-button" type="submit">Show</button>
+          </form>
+          <button class="star-button" id="starButton" type="button">☆ Add to watchlist</button>
+        </div>
+
+        <div class="chip-row">
+          <span class="chip-label">⭐ Watchlist</span>
+          <div class="chips stock-chips" id="watchChips"></div>
+        </div>
+        <div class="chip-row">
+          <span class="chip-label">Popular</span>
+          <div class="chips stock-chips" id="stockChips"></div>
+        </div>
+
+        <div class="symbol-info" id="symbolInfo"></div>
+        <div class="widget-box chart-box" id="stockChart"></div>
+      </div>
+
+      <h2 class="group-title" id="detailsTitle">Stock details</h2>
+      <div class="details-grid">
+        <div class="panel">
+          <h2 class="section-title">🎯 Buy / Sell signal</h2>
+          <p class="panel-note">Based on chart indicators. Just for fun, not financial advice.</p>
+          <div class="widget-box gauge-box" id="technicalBox"></div>
+        </div>
+
+        <div class="panel" id="profilePanel">
+          <h2 class="section-title">🏢 Company</h2>
+          <div class="widget-box profile-box" id="profileBox"></div>
+        </div>
+
+        <div class="panel" id="numbersPanel">
+          <h2 class="section-title">📊 Key numbers</h2>
+          <div class="widget-box numbers-box" id="numbersBox"></div>
+        </div>
+
+        <div class="panel">
+          <h2 class="section-title" id="newsTitle">📰 News</h2>
+          <div class="widget-box news-box" id="newsBox"></div>
+        </div>
+      </div>
+
+      <h2 class="group-title">Market today</h2>
+      <div class="market-today">
+        <div class="panel">
+          <h2 class="section-title">🔥 Top movers</h2>
+          <p class="panel-note">Biggest gainers, losers and most active US stocks today</p>
+          <div class="widget-box movers-box" id="moversBox"></div>
+        </div>
+
+        <div class="panel">
+          <h2 class="section-title">🗺️ S&amp;P 500 heatmap</h2>
+          <p class="panel-note">Bigger box = bigger company • green = up today • red = down today</p>
+          <div class="widget-box heatmap-box" id="heatmap"></div>
+        </div>
+      </div>
+      <p class="panel-note center">Click any stock in the ticker, Top movers or the heatmap to open it here.</p>
+    </section>
+
+    <section class="view" id="roomView" hidden>
+      <div class="room-head">
+        <div class="room-title">
+          <h1>🖥️ Trading Room</h1>
+          <span class="status" id="roomStatus"></span>
+        </div>
+        <div class="room-clocks">
+          <div class="clock">
+            <small>Your time</small>
+            <strong id="localClock">--:--:--</strong>
+          </div>
+          <div class="clock">
+            <small>New York</small>
+            <strong id="nyClock">--:--:--</strong>
+          </div>
+          <button class="room-button" id="fullscreenButton" type="button" title="Full screen (F)">⛶ Full screen</button>
+        </div>
+      </div>
+
+      <div class="world-strip" id="worldStrip"></div>
+
+      <div class="room-top">
+        <div class="panel room-panel">
+          <div class="panel-top">
+            <h2 class="section-title">🕐 Market hours <span class="title-note" id="timelineDate"></span></h2>
+            <span class="timeline-legend">
+              <span><i class="key live"></i>Open now</span>
+              <span><i class="key later"></i>Later today</span>
+              <span><i class="key done"></i>Finished</span>
+            </span>
+          </div>
+          <div class="timeline" id="timeline"></div>
+        </div>
+
+        <div class="panel room-panel mood-panel">
+          <h2 class="section-title">🌡️ Market mood</h2>
+          <div class="widget-box mood-box" id="moodBox"></div>
+        </div>
+      </div>
+
+      <div class="room-toolbar">
+        <div class="tool-group">
+          <span class="tool-label">Layout</span>
+          <div class="segmented" id="layoutButtons"></div>
+        </div>
+        <div class="tool-group grow">
+          <span class="tool-label">Setups</span>
+          <div class="setup-chips" id="setupChips"></div>
+          <button class="chip ghost" id="saveSetupButton" type="button">＋ Save this setup</button>
+          <form class="setup-form" id="setupForm" hidden>
+            <input type="text" id="setupName" maxlength="24" placeholder="Name it, e.g. My swing trades" autocomplete="off">
+            <button class="chip active" type="submit">Save</button>
+            <button class="chip" id="cancelSetupButton" type="button">Cancel</button>
+          </form>
+        </div>
+        <div class="tool-group watch-group">
+          <span class="tool-label">⭐ Watchlist</span>
+          <div class="setup-chips" id="roomWatchChips"></div>
+          <span class="tool-hint">Loads into the chart with the blue frame</span>
+        </div>
+      </div>
+
+      <div class="room-main">
+        <div class="chart-wall" id="chartWall"></div>
+
+        <div class="room-side">
+          <div class="panel room-panel">
+            <h2 class="section-title">🔥 Top movers <span class="title-note">US stocks today</span></h2>
+            <div class="widget-box room-movers-box" id="roomMoversBox"></div>
+          </div>
+          <div class="panel room-panel">
+            <h2 class="section-title">📰 Live news</h2>
+            <div class="widget-box room-news-box" id="roomNewsBox"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="room-tools">
+        <div class="panel room-panel">
+          <h2 class="section-title">📅 Economic calendar</h2>
+          <div class="widget-box calendar-box" id="calendarBox"></div>
+        </div>
+
+        <div class="panel room-panel">
+          <h2 class="section-title">🧮 Position size</h2>
+          <div class="calc">
+            <label>Account size <input type="number" id="pcAccount" min="0" step="any" value="10000"></label>
+            <label>Risk per trade (%) <input type="number" id="pcRisk" min="0" step="any" value="1"></label>
+            <label>Entry price <input type="number" id="pcEntry" min="0" step="any" value="100"></label>
+            <label>Stop-loss price <input type="number" id="pcStop" min="0" step="any" value="95"></label>
+            <label class="wide">Target price (optional) <input type="number" id="pcTarget" min="0" step="any" value="115"></label>
+          </div>
+          <div class="calc-results" id="pcResults"></div>
+        </div>
+
+        <div class="panel room-panel">
+          <h2 class="section-title">💰 Profit / loss</h2>
+          <div class="calc">
+            <label>Buy price <input type="number" id="plBuy" min="0" step="any" value="100"></label>
+            <label>Sell price <input type="number" id="plSell" min="0" step="any" value="110"></label>
+            <label>Shares <input type="number" id="plShares" min="0" step="any" value="10"></label>
+            <label>Fees (total) <input type="number" id="plFees" min="0" step="any" value="0"></label>
+          </div>
+          <div class="calc-results" id="plResults"></div>
+        </div>
+
+        <div class="panel room-panel">
+          <h2 class="section-title">📝 Trading notes</h2>
+          <textarea id="roomNotes" placeholder="Your plan for today, stocks to watch, why you bought…"></textarea>
+          <p class="panel-note" id="notesStatus">Saved in this browser only</p>
+        </div>
+      </div>
+
+      <p class="panel-note center">
+        Click a chart's top bar to pick it (blue frame) • <strong>⤢</strong> makes it big and shows its buy/sell signal •
+        <strong>F</strong> full screen • <strong>/</strong> change the picked chart • <strong>Esc</strong> exit full screen.
+        Market hours don't include public holidays.
+      </p>
+    </section>
+
+    <section class="view" id="portfolioView" hidden>
+      <header>
+        <h1>💼 My Portfolio</h1>
+        <p class="subtitle">The live value of your money, crypto and gold</p>
+      </header>
+
+      <section class="card portfolio-total">
+        <div class="total-top">
+          <div>
+            <span class="label">Total value</span>
+            <p class="total-value" id="portfolioTotal">—</p>
+            <p class="total-change" id="portfolioChange"></p>
+          </div>
+          <div class="main-currency">
+            <span class="label">Show values in</span>
+            <div class="picker" id="mainCurrencyPicker"></div>
+          </div>
+        </div>
+
+        <div class="donut-area" id="donutArea" hidden>
+          <svg class="donut" id="donut" viewBox="0 0 42 42"></svg>
+          <div class="donut-legend" id="donutLegend"></div>
+        </div>
+      </section>
+
+      <div class="portfolio-head">
+        <h2 class="section-title">Your assets</h2>
+        <button class="copy" id="showAddButton" type="button">+ Add asset</button>
+      </div>
+
+      <section class="card add-panel" id="addPanel" hidden>
+        <span class="label">Asset</span>
+        <div class="picker asset-picker" id="holdingPicker"></div>
+
+        <label class="label" for="holdingAmount">Amount you own</label>
+        <div class="field amount-field">
+          <input id="holdingAmount" type="number" inputmode="decimal" min="0" step="any" placeholder="0">
+          <span class="unit" id="holdingUnit"></span>
+        </div>
+
+        <div class="chips" id="holdingUnitChips" hidden>
+          <button class="chip" data-unit="g" type="button">Grams</button>
+          <button class="chip" data-unit="oz" type="button">Ounces</button>
+          <button class="chip" data-unit="kg" type="button">Kilograms</button>
+        </div>
+
+        <div class="chips" id="holdingKaratChips" hidden>
+          <button class="chip" data-karat="24" type="button">24K</button>
+          <button class="chip" data-karat="22" type="button">22K</button>
+          <button class="chip" data-karat="21" type="button">21K</button>
+          <button class="chip" data-karat="18" type="button">18K</button>
+        </div>
+
+        <label class="label" for="holdingCost">Total you paid (optional)</label>
+        <div class="field amount-field">
+          <input id="holdingCost" type="number" inputmode="decimal" min="0" step="any" placeholder="0">
+          <span class="unit" id="holdingCostCurrency">SAR</span>
+        </div>
+        <p class="panel-note">Add what you paid to see your profit or loss.</p>
+
+        <p class="form-error" id="holdingError" hidden></p>
+        <div class="form-buttons">
+          <button class="copy" id="saveHoldingButton" type="button">Add to portfolio</button>
+          <button class="chip" id="cancelHoldingButton" type="button">Cancel</button>
+        </div>
+      </section>
+
+      <div class="holdings" id="holdingList"></div>
+
+      <p class="panel-note center">Your portfolio is saved only in this browser. Metal prices update once a day; crypto every minute.</p>
+    </section>
+
+    <footer>
+      <p id="updated"></p>
+      <p>
+        Rates by <a href="https://www.exchangerate-api.com" target="_blank">ExchangeRate-API</a> •
+        Crypto by <a href="https://www.coingecko.com" target="_blank">CoinGecko</a> •
+        Metals by <a href="https://github.com/fawazahmed0/exchange-api" target="_blank">Currency-API</a> •
+        Stocks by <a href="https://www.tradingview.com" target="_blank">TradingView</a>
+      </p>
+    </footer>
+  </main>
+
+  <button class="bell" id="bellButton" type="button" title="Price alerts">
+    🔔<span class="bell-count" id="bellCount" hidden>0</span>
+  </button>
+
+  <div class="alert-banner" id="alertBanner" hidden>
+    <span id="alertBannerText"></span>
+    <button type="button" id="alertBannerClose" title="Close">✕</button>
+  </div>
+
+  <aside class="drawer" id="alertDrawer" hidden>
+    <div class="drawer-head">
+      <h2>🔔 Price alerts</h2>
+      <button class="drawer-close" id="drawerClose" type="button" title="Close">✕</button>
+    </div>
+
+    <div class="alert-form">
+      <span class="label">Asset</span>
+      <div class="picker" id="alertPicker"></div>
+
+      <span class="label">Price in</span>
+      <div class="picker" id="alertCurrencyPicker"></div>
+
+      <p class="alert-now" id="alertNow"></p>
+
+      <label class="label" for="alertTarget">Alert me when the price reaches</label>
+      <div class="field amount-field">
+        <input id="alertTarget" type="number" inputmode="decimal" min="0" step="any">
+        <span class="unit" id="alertTargetUnit"></span>
+      </div>
+      <p class="panel-note" id="alertHint"></p>
+
+      <button class="copy" id="addAlertButton" type="button">🔔 Set alert</button>
+    </div>
+
+    <h3 class="drawer-title">Your alerts</h3>
+    <div class="alert-list" id="alertList"></div>
+    <p class="panel-note">Alerts only work while this site is open in a tab. Crypto prices refresh every minute; currencies and metals once a day.</p>
+  </aside>
+
+  <script src="script.js"></script>
+</body>
+</html>
