@@ -33,4 +33,4 @@ Download the files and open `index.html` in your browser.
 > Your watchlist, portfolio, alerts and notes are saved in your own browser only.
 > Prices are for information only. This is not financial advice.
 
-Made by Fahad Aziz while learning to code.
+Made by Fahad Abdulaziz while learning to code.
